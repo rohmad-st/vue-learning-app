@@ -4,11 +4,14 @@
       <v-layout column align-center>
         <v-card>
           <v-container fluid grid-list-md>
-            <v-layout row wrap>
+            <v-layout row wrap v-if="favorites && favorites.length > 0">
               <product
-                v-for="(product, index) in products"
+                v-for="(product, index) in favorites"
                 :key="index"
                 :product="product"/>
+            </v-layout>
+            <v-layout row wrap v-else>
+              <span>Not data found.</span>
             </v-layout>
           </v-container>
         </v-card>
@@ -18,18 +21,14 @@
 </template>
 
 <script>
-import { mapState, mapActions } from 'vuex'
+import { mapState } from 'vuex'
 import Product from '@/components/Product'
 
 export default {
-  name: 'Home',
+  name: 'Favorite',
   components: { Product },
-  created () {
-    this.getProducts()
-  },
   computed: {
     ...mapState({
-      products: state => state.products.all,
       favorites: state => state.products.favorites
     })
   },
@@ -39,27 +38,7 @@ export default {
     }
   },
   methods: {
-    ...mapActions({
-      getProducts: 'products/getAll'
-    })
+    //
   }
 }
 </script>
-
-<!-- Add "scoped" attribute to limit CSS to this component only -->
-<style scoped>
-h1, h2 {
-  font-weight: normal;
-}
-ul {
-  list-style-type: none;
-  padding: 0;
-}
-li {
-  display: inline-block;
-  margin: 0 10px;
-}
-a {
-  color: #42b983;
-}
-</style>
