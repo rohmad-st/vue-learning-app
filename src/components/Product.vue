@@ -26,7 +26,7 @@
 
 <script>
 import { mapGetters, mapActions } from 'vuex'
-import { Product } from '@/models/product'
+import Product from '@/models/product'
 
 export default {
   name: 'Product',

@@ -15,13 +15,16 @@ const state = {
 // getters
 const getters = {
   favoriteIndex: (state) => (id) => {
+    if (!state.favorites) return -1
     return state.favorites.findIndex(favorite => favorite.id === id)
   },
   isFavorite: (state) => (id) => {
+    if (!state.favorites) return false
     const favoriteIds = state.favorites.map(favorite => favorite.id)
     return favoriteIds.indexOf(id) > -1
   },
   authors: (state) => {
+    if (!state.detail || !state.detail.authors) return ''
     return state.detail.authors.join(', ')
   }
 }
@@ -30,14 +33,21 @@ const getters = {
 const actions = {
   getDummiesProduct ({ commit }) {
     const response = productClient.getDummies()
-    const products = response.map(it => Product.fromAPI(it))
+    const products = response.items.map(it => Product.fromAPI(it))
     commit('setProducts', products)
   },
   getAll ({ commit }) {
-    productClient.getProducts()
+    const defaultProducts = state.all
+    return productClient.getProducts()
       .then((response) => {
         const products = response.items.map(it => Product.fromAPI(it))
         commit('setProducts', products)
+      }, (error) => {
+        console.error(error)
+        commit('setProducts', defaultProducts)
+      }).catch((error) => {
+        console.error(error)
+        commit('setProducts', defaultProducts)
       })
   },
   /**

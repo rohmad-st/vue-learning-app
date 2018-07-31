@@ -14,16 +14,14 @@ describe('Product.vue', () => {
   //     propsData: { ...values }
   //   })
   // }
-  let actions
-  let getters
-  let store
+  let actions, getters, store
 
   beforeEach(() => {
     actions = {
       toggleFavorite: jest.fn()
     }
     getters = {
-      'products/isFavorite': (id) => jest.fn()
+      'products/isFavorite': (id) => jest.fn(() => Boolean)
     }
     store = new Vuex.Store({
       state: {},
@@ -39,6 +37,6 @@ describe('Product.vue', () => {
       localVue,
       propsData: { product }
     })
-    expect(wrapper.find('.headline').text()).toBe('judul')
+    expect(wrapper.find('.headline').text()).toBe(product.title)
   })
 })
