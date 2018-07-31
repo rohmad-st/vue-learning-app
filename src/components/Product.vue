@@ -29,7 +29,7 @@ import { mapGetters, mapActions } from 'vuex'
 import { Product } from '@/models/product'
 
 export default {
-  name: 'ProductView',
+  name: 'Product',
   props: {
     product: {
       type: Product,

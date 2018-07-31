@@ -1,5 +1,5 @@
 import productClient from '@/api/products'
-import { Product } from '@/models/product'
+import Product from '@/models/product'
 
 // initial states
 const state = {

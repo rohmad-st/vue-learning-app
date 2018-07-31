@@ -1,5 +1,5 @@
 
-export class Product {
+export default class Product {
   constructor (id, title, image) {
     this.id = id
     this.title = title
