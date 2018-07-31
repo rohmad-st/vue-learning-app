@@ -42,11 +42,9 @@ const actions = {
       .then((response) => {
         const products = response.items.map(it => Product.fromAPI(it))
         commit('setProducts', products)
-      }, (error) => {
-        console.error(error)
+      }, () => {
         commit('setProducts', defaultProducts)
-      }).catch((error) => {
-        console.error(error)
+      }).catch(() => {
         commit('setProducts', defaultProducts)
       })
   },
@@ -77,11 +75,9 @@ const actions = {
 // mutations
 const mutations = {
   setProducts (state, products) {
-    console.log('set products!', products)
     state.all = products
   },
   setDetail (state, product) {
-    console.log('set detail product!', product)
     const info = product.volumeInfo
     const images = info.imageLinks
     const thumbnail = (images && images.thumbnail) ? images.thumbnail : ''
@@ -93,11 +89,9 @@ const mutations = {
     Object.assign(state.detail, params)
   },
   addAsFavorite (state, product) {
-    console.log('add as favorite!', product)
     state.favorites.push(product)
   },
   removeAsFavorite (state, index) {
-    console.log('remove as favorite!', index)
     state.favorites.splice(index, 1)
   }
 }
