@@ -10,20 +10,22 @@
       app
     >
       <v-list>
-        <router-link
-          v-for="(item, i) in items"
+        <v-list-tile
+          value="true"
+          v-for="(route, i) in routes"
           :key="i"
-          class="product--link"
-          :to="{ name: item.name }">
-          <v-list-tile value="true">
-              <v-list-tile-action>
-                <v-icon v-html="item.icon"></v-icon>
-              </v-list-tile-action>
-              <v-list-tile-content>
-                <v-list-tile-title v-text="item.title"></v-list-tile-title>
-              </v-list-tile-content>
-          </v-list-tile>
-        </router-link>
+          :to="{ name: route.name }">
+          <v-list-tile-action>
+            <v-icon
+              class="teal--text"
+              v-html="route.meta.icon"></v-icon>
+          </v-list-tile-action>
+          <v-list-tile-content>
+            <v-list-tile-title
+              class="teal--text"
+              v-text="route.meta.caption"></v-list-tile-title>
+          </v-list-tile-content>
+        </v-list-tile>
       </v-list>
     </v-navigation-drawer>
     <v-toolbar
@@ -36,7 +38,13 @@
       <router-view/>
     </v-content>
     <v-footer :fixed="fixed" app>
-      <span>&copy; 2017</span>
+      <span class="text-center">
+        Build with &hearts; by Rohmad using
+        <a href="https://vuejs.org/"
+          target="_blank"
+          class="no-style teal--text">Vue.js</a>
+        &copy; 2018
+      </span>
     </v-footer>
   </v-app>
 </template>
@@ -50,26 +58,17 @@ export default {
       clipped: false,
       drawer: false,
       fixed: false,
-      items: [
-        {
-          icon: 'bubble_chart',
-          name: 'home',
-          title: 'Home'
-        },
-        {
-          icon: 'favorite',
-          name: 'favorite',
-          title: 'Favorites'
-        }
-      ],
       miniVariant: false,
-      title: 'Vuetify.js'
+      routes: this.$router.options.routes
     }
   }
 }
 </script>
 
 <style lang="stylus" scoped>
-  .product--link
+  .text-center
+    width 100%
+    text-align center
+  .no-style
     text-decoration none
 </style>

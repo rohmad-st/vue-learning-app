@@ -9,7 +9,22 @@ export default new Router({
     {
       path: '/',
       name: 'home',
-      component: Home
+      component: Home,
+      meta: {
+        icon: 'home',
+        caption: 'Home',
+        title: 'Home'
+      }
+    },
+    {
+      path: '/favorite',
+      name: 'favorite',
+      component: () => import(/* webpackChunkName: "favorite" */ './views/Favorite.vue'),
+      meta: {
+        icon: 'favorite',
+        caption: 'Favorite',
+        title: 'Favorite'
+      }
     },
     {
       path: '/about',
@@ -17,12 +32,12 @@ export default new Router({
       // route level code-splitting
       // this generates a separate chunk (about.[hash].js) for this route
       // which is lazy-loaded when the route is visited.
-      component: () => import(/* webpackChunkName: "about" */ './views/About.vue')
-    },
-    {
-      path: '/favorite',
-      name: 'favorite',
-      component: () => import(/* webpackChunkName: "favorite" */ './views/Favorite.vue')
+      component: () => import(/* webpackChunkName: "about" */ './views/About.vue'),
+      meta: {
+        icon: 'help',
+        caption: 'About',
+        title: 'About'
+      }
     }
   ]
 })

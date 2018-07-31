@@ -1,5 +1,9 @@
 <template>
-  <div class="about">
-    <h1>This is an about page</h1>
-  </div>
+  <v-container fluid>
+    <v-slide-y-transition mode="out-in">
+      <v-layout column align-center>
+        <h1>This is an about page.</h1>
+      </v-layout>
+    </v-slide-y-transition>
+  </v-container>
 </template>
