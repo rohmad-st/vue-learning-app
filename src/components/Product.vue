@@ -16,7 +16,7 @@
       </v-card-media>
       <v-card-actions>
         <v-spacer></v-spacer>
-        <v-btn icon @click="toggleFavorite(product)">
+        <v-btn icon @click.prevent="toggleFavorite(product)">
           <v-icon>{{ this.isFavorite(this.product.id) ? 'favorite' : 'favorite_border' }}</v-icon>
         </v-btn>
       </v-card-actions>
