@@ -19,7 +19,7 @@
 
             <v-card-actions>
               <v-btn flat color="teal" :to="{name: 'home'}">
-                <v-icon>keyboard_backspace</v-icon> Previous Page
+                <v-icon>keyboard_backspace</v-icon> Home
               </v-btn>
               <v-btn flat color="orange"
                 :href="product.source"
