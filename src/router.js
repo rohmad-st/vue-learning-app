@@ -38,6 +38,17 @@ export default new Router({
         caption: 'About',
         title: 'About'
       }
+    },
+    {
+      path: '/detail/:id',
+      name: 'detail',
+      component: () => import(/* webpackChunkName: "detail" */ './views/Detail.vue'),
+      meta: {
+        icon: 'help',
+        caption: 'Detail',
+        title: 'Detail',
+        hidden: true
+      }
     }
   ]
 })

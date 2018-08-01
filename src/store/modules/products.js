@@ -5,11 +5,7 @@ import Product from '@/models/product'
 const state = {
   all: [],
   favorites: [],
-  detail: {
-    title: '',
-    thumbnail: '',
-    authors: ''
-  }
+  detail: new Product()
 }
 
 // getters
@@ -54,8 +50,9 @@ const actions = {
    * @param {String} id - ID of volume
    */
   getDetail ({ commit }, id) {
-    productClient.getDetailProduct(id).then((response) => {
-      commit('setDetail', response)
+    return productClient.getDetailProduct(id).then((response) => {
+      const detail = Product.fromAPI(response)
+      commit('setDetail', detail)
     })
   },
   /**
@@ -78,15 +75,7 @@ const mutations = {
     state.all = products
   },
   setDetail (state, product) {
-    const info = product.volumeInfo
-    const images = info.imageLinks
-    const thumbnail = (images && images.thumbnail) ? images.thumbnail : ''
-    const params = {
-      title: info.title,
-      thumbnail,
-      authors: info.authors
-    }
-    Object.assign(state.detail, params)
+    Object.assign(state.detail, product)
   },
   addAsFavorite (state, product) {
     state.favorites.push(product)

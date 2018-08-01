@@ -59,7 +59,7 @@ export default {
       drawer: false,
       fixed: false,
       miniVariant: false,
-      routes: this.$router.options.routes
+      routes: this.$router.options.routes.filter((route) => route.meta.hidden !== true)
     }
   }
 }

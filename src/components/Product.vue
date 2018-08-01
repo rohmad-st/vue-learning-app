@@ -1,6 +1,6 @@
 <template>
   <v-flex>
-    <v-card>
+    <v-card :to="{ name: 'detail', params: { id: product.id } }">
       <v-card-media
         :src="product.image"
         height="200px"
