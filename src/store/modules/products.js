@@ -1,5 +1,6 @@
 import productClient from '@/api/products'
 import Product from '@/models/product'
+import { PRODUCTS as types } from '../mutations'
 
 // initial states
 const state = {
@@ -30,18 +31,19 @@ const actions = {
   getDummiesProduct ({ commit }) {
     const response = productClient.getDummies()
     const products = response.items.map(it => Product.fromAPI(it))
-    commit('setProducts', products)
+    commit(types.SET_PRODUCTS, products)
   },
-  getAll ({ commit }) {
+  getAll ({ dispatch, commit }) {
     const defaultProducts = state.all
+    if (process.env.VUE_APP_OFFLINE) return dispatch('getDummiesProduct')
     return productClient.getProducts()
       .then((response) => {
         const products = response.items.map(it => Product.fromAPI(it))
-        commit('setProducts', products)
+        commit(types.SET_PRODUCTS, products)
       }, () => {
-        commit('setProducts', defaultProducts)
+        commit(types.SET_PRODUCTS, defaultProducts)
       }).catch(() => {
-        commit('setProducts', defaultProducts)
+        commit(types.SET_PRODUCTS, defaultProducts)
       })
   },
   /**
@@ -52,7 +54,7 @@ const actions = {
   getDetail ({ commit }, id) {
     return productClient.getDetailProduct(id).then((response) => {
       const detail = Product.fromAPI(response)
-      commit('setDetail', detail)
+      commit(types.SET_DETAIL, detail)
     })
   },
   /**
@@ -62,25 +64,25 @@ const actions = {
    */
   toggleFavorite ({ commit, getters }, product) {
     if (getters.isFavorite(product.id)) {
-      commit('removeAsFavorite', getters.favoriteIndex(product.id))
+      commit(types.REMOVE_AS_FAVORITE, getters.favoriteIndex(product.id))
     } else {
-      commit('addAsFavorite', product)
+      commit(types.ADD_AS_FAVORITE, product)
     }
   }
 }
 
 // mutations
 const mutations = {
-  setProducts (state, products) {
+  [types.SET_PRODUCTS] (state, products) {
     state.all = products
   },
-  setDetail (state, product) {
+  [types.SET_DETAIL] (state, product) {
     Object.assign(state.detail, product)
   },
-  addAsFavorite (state, product) {
+  [types.ADD_AS_FAVORITE] (state, product) {
     state.favorites.push(product)
   },
-  removeAsFavorite (state, index) {
+  [types.REMOVE_AS_FAVORITE] (state, index) {
     state.favorites.splice(index, 1)
   }
 }

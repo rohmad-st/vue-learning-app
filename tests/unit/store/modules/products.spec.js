@@ -3,6 +3,7 @@ import Vuex from 'vuex'
 import data from '@/utils/data.js'
 import Product from '@/models/product.js'
 import products from '@/store/modules/products.js'
+// import { PRODUCTS as types } from '@/mutations'
 
 describe('modules/products.js', () => {
   const localVue = createLocalVue()
@@ -37,5 +38,17 @@ describe('modules/products.js', () => {
       .then(() => {
         expect(store.state.favorites.length).toBe(0)
       })
+  })
+
+  it('should return index of favorite product', () => {
+    store.state.all.forEach((all, index) => {
+      if (index >= 3) return
+      store.state.favorites.push(all)
+    })
+    expect(store.getters.favoriteIndex(store.state.favorites[1].id)).toBe(1)
+  })
+
+  it('should return status favorite of products', () => {
+    expect(store.getters.isFavorite(store.state.favorites[0].id)).toBe(true)
   })
 })
